@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { CORES } from '../../styles/theme'
 
 export const Card = styled.div`
@@ -47,7 +48,7 @@ export const Description = styled.p`
   padding: 0 8px;
 `
 
-export const Button = styled.a`
+export const Button = styled(Link)`
   display: inline-block;
   background-color: ${CORES.primaria};
   color: ${CORES.branca};

@@ -6,6 +6,19 @@ export const HeaderBar = styled.header`
   padding: 40px 0;
   margin-bottom: 80px;
     background-image: url("/Vector.png");
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    div.container {
+        display: inherit;
+        flex-direction: row;
+        max-width: 1024px;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
 `
 
 export const Title = styled.h1`
@@ -14,4 +27,8 @@ export const Title = styled.h1`
   margin: 0 auto;
   line-height: 42px;
   margin-top: 136px;
+`
+
+export const Span = styled.span`
+    font-size: 16px;
 `

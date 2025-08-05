@@ -1,11 +1,26 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
 import * as S from './styles'
 
-const Header = () => (
+type Props = {
+    isHome: boolean
+}
+
+const Header = ({ isHome }: Props) => (
     <S.HeaderBar>
-        <img src={logo} alt="efood" />
-        <S.Title>Viva experiências gastronômicas no conforto da sua casa</S.Title>
+        {isHome ? (
+            <>
+                <img src={logo} alt="efood" />
+                <S.Title>Viva experiências gastronômicas no conforto da sua casa</S.Title>
+            </>
+        ) : (
+            <div className="container">
+                <Link to="/">Restaurantes</Link>
+                <img src={logo} alt="efood" />
+                <S.Span>0 produto(s) no carrinho</S.Span>
+            </div>
+        )}
     </S.HeaderBar>
 )
 

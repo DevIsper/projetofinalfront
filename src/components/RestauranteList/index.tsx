@@ -44,6 +44,7 @@ const RestaurantsList = () => {
                 {mockRestaurants.map((restaurant) => (
                     <RestauranteCard
                         key={restaurant.id}
+                        id={restaurant.id}
                         title={restaurant.title}
                         rating={restaurant.rating}
                         description={restaurant.description}
