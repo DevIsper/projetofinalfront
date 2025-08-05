@@ -4,6 +4,7 @@ import { CORES } from '../../styles/theme'
 export const Card = styled.div`
   background-color: ${CORES.branca};
   position: relative;
+    border: 1px solid ${CORES.primaria};
 `
 
 export const Image = styled.img`
@@ -21,12 +22,21 @@ export const Title = styled.h3`
 
 export const Rating = styled.span`
   position: absolute;
-  top: 8px;
+  bottom: 125px;
   right: 8px;
+  color: ${CORES.primaria};
+  padding: 4px 8px;
+`
+
+export const Tags = styled.span`
+  position: relative;
+  bottom: 210px;
   background-color: ${CORES.primaria};
   color: ${CORES.branca};
   padding: 4px 8px;
+    font-size: small;
   border-radius: 4px;
+    margin-left: 4px;
 `
 
 export const Description = styled.p`

@@ -6,7 +6,7 @@ import {
     Title,
     Rating,
     Description,
-    Button
+    Button, Tags
 } from './styles'
 
 type Props = {
@@ -14,15 +14,23 @@ type Props = {
     rating: number
     description: string
     image: string
+    tags: string[]
 }
 
-const RestaurantCard = ({ title, rating, description, image }: Props) => {
+const RestaurantCard = ({ title, rating, description, image, tags }: Props) => {
     return (
         <Card>
-            <Image src={image} alt={title} />
+            <Image src={image} alt={title}/>
+
+            <div>{tags.map((tag) => (
+                <Tags>
+                    {tag}
+                </Tags>
+            ))}</div>
+
             <Title>{title}</Title>
             <Rating>
-                {rating} <img src={estrela} alt="estrela" />
+                {rating} <img src={estrela} alt="estrela"/>
             </Rating>
             <Description>{description}</Description>
             <Button href="#">Saiba mais</Button>

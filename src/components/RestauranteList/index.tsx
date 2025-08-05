@@ -8,28 +8,32 @@ const mockRestaurants = [
         title: 'Hioki Sushi',
         rating: 4.9,
         description: 'Biscoito ou bolacha? A primeira vista podem parecer a mesma coisa, mas a forma de se apreciar o sabor de cada uma se diferencia... leia mais',
-        image: '/image1.png'
+        image: '/image1.png',
+        tags: ['Destaque da Semana', 'Japonesa']
     },
     {
         id: 2,
         title: 'La Dolce Vita Trattoria',
         rating: 4.6,
         description: 'A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e o melhor... leia mais',
-        image: '/image1.png'
+        image: '/image1.png',
+        tags: ['Italiana']
     },
     {
         id: 3,
         title: 'La Dolce Vita Trattoria',
         rating: 4.6,
         description: 'A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e o melhor... leia mais',
-        image: '/image2.png'
+        image: '/image2.png',
+        tags: ['Italiana']
     },
     {
         id: 4,
         title: 'Hioki Sushi',
         rating: 4.9,
         description: 'Biscoito ou bolacha? A primeira vista podem parecer a mesma coisa, mas a forma de se apreciar o sabor de cada uma se diferencia... leia mais',
-        image: '/image2.png'
+        image: '/image2.png',
+        tags: ['Italiana']
     }
 ]
 
@@ -44,6 +48,7 @@ const RestaurantsList = () => {
                         rating={restaurant.rating}
                         description={restaurant.description}
                         image={restaurant.image}
+                        tags={restaurant.tags}
                     />
                 ))}
             </Grid>
