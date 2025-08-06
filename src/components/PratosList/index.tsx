@@ -1,7 +1,7 @@
-import React from "react";
-import {PratoCard} from "../PratosCard/styles.ts";
-import {PratosCard} from "../PratosCard";
-import {Grid, List} from "./styles.ts";
+import React, { useState } from "react";
+import { PratosCard, type PratosCardProps } from "../PratosCard";
+import { Grid, List } from "./styles.ts";
+import Modal from "../Modal";
 
 const pratosItalianos = [
     {
@@ -85,26 +85,37 @@ export type Props = {
     isJaponesa: boolean
 }
 
-export const PratosList: React.FC<Props> = ({isJaponesa}) => (
-    <>
-        <div className="container">
-            <List>
-            <Grid>
-                {isJaponesa ? (
-                    <>
-                        {pratosJaponeses.map((prato) => (
-                            <PratosCard key={prato.id} id={prato.id} image={prato.image} title={prato.title} description={prato.description} />
+export const PratosList: React.FC<Props> = ({ isJaponesa }) => {
+    const [selectedPrato, setSelectedPrato] = useState<PratosCardProps | null>(null);
+
+    const handleOpenModal = (prato: PratosCardProps) => {
+        setSelectedPrato(prato);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedPrato(null);
+    };
+
+    const pratos = isJaponesa ? pratosJaponeses : pratosItalianos;
+
+    return (
+        <>
+            <div className="container">
+                <List>
+                    <Grid>
+                        {pratos.map((prato) => (
+                            <PratosCard
+                                key={prato.id}
+                                {...prato} // Passando todas as props de uma vez
+                                onClick={() => handleOpenModal(prato)}
+                            />
                         ))}
-                    </>
-                ) : (
-                    <>
-                        {pratosItalianos.map((prato) => (
-                            <PratosCard key={prato.id} id={prato.id} image={prato.image} title={prato.title} description={prato.description} />
-                        ))}
-                    </>
-                )}
-            </Grid>
-        </List>
-        </div>
-    </>
-)
+                    </Grid>
+                </List>
+            </div>
+            {selectedPrato && (
+                <Modal prato={selectedPrato} onClose={handleCloseModal} />
+            )}
+        </>
+    );
+};
