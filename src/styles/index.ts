@@ -17,13 +17,8 @@ export const GlobalCss = createGlobalStyle`
   
   .container {
       max-width: 1024px;
-  }
-  
-  .center {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
+      width: 100%;
+      margin: 0 auto;
   }
 `
 
