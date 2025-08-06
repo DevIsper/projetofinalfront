@@ -1,13 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import estrela from '../../assets/images/estrela.svg'
 import {
     Card,
-    Image,
+    ImageContainer,
+    Tags,
+    Info,
     Title,
     Rating,
     Description,
-    Button, Tags
+    Button
 } from './styles'
 
 type Props = {
@@ -22,19 +23,27 @@ type Props = {
 const RestaurantCard = ({ id, title, rating, description, image, tags }: Props) => {
     return (
         <Card>
-            <Image src={image} alt={title}/>
-
-            <div>{tags.map((tag) => (
-                <Tags key={tag}>
-                    {tag}
+            <ImageContainer>
+                <img src={image} alt={title} />
+                <Tags>
+                    {tags.map((tag) => (
+                        <span key={tag}>
+                            {tag}
+                        </span>
+                    ))}
                 </Tags>
-            ))}</div>
+            </ImageContainer>
 
-            <Title>{title}</Title>
-            <Rating>
-                {rating} <img src={estrela} alt="estrela"/>
-            </Rating>
+            <Info>
+                <Title>{title}</Title>
+                <Rating>
+                    <span>{rating}</span>
+                    <img src={estrela} alt="estrela" />
+                </Rating>
+            </Info>
+
             <Description>{description}</Description>
+
             <Button to={`/restaurant/${id}`}>Saiba mais</Button>
         </Card>
     )

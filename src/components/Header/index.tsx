@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
 import * as S from './styles'
+import {StyledLink} from "./styles";
 
 type Props = {
     isHome: boolean
@@ -16,7 +16,7 @@ const Header = ({ isHome }: Props) => (
             </>
         ) : (
             <div className="container">
-                <Link to="/">Restaurantes</Link>
+                <StyledLink to="/">Restaurantes</StyledLink>
                 <img src={logo} alt="efood" />
                 <S.Span>0 produto(s) no carrinho</S.Span>
             </div>

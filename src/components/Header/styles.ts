@@ -1,10 +1,11 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import {CORES} from "../../styles/theme.ts";
 
 export const HeaderBar = styled.header`
   background-color: #ffebe9;
   text-align: center;
   padding: 40px 0;
-  margin-bottom: 80px;
     background-image: url("/Vector.png");
     display: flex;
     flex-direction: column;
@@ -31,4 +32,9 @@ export const Title = styled.h1`
 
 export const Span = styled.span`
     font-size: 16px;
+`
+
+export const StyledLink = styled(Link)`
+    color: ${CORES.primaria};
+    text-decoration: none;
 `
