@@ -38,7 +38,7 @@ const RestaurantCard = ({ id, title, rating, description, image, tags }: Props) 
                 <Title>{title}</Title>
                 <Rating>
                     <span>{rating}</span>
-                    <img src={estrela} alt="estrela" />
+                    <img src={estrela} alt="Estrela de avaliação" />
                 </Rating>
             </Info>
 

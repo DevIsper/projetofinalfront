@@ -34,6 +34,7 @@ export const PratoCard = styled.div`
         padding-top: 8px;
         font-weight: 400;
         font-size: 14px;
+        overflow: auto;
     }
 `;
 

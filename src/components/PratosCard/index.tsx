@@ -1,20 +1,18 @@
 import React from "react";
 import { Imagem, PratoCard } from "./styles.ts";
+import type {Prato} from "../../types/types.ts";
 
 export type PratosCardProps = {
-    id: number
-    image: string
-    title: string
-    description: string
+    prato: Prato
     onClick?: () => void
 }
 
-export const PratosCard: React.FC<PratosCardProps> = ({ id, image, title, description, onClick }) => (
+export const PratosCard: React.FC<PratosCardProps> = ({ prato, onClick }) => (
     <>
         <PratoCard onClick={onClick}>
-            <Imagem style={{ backgroundImage: `url(${image})` }} />
-            <h3>{title}</h3>
-            <p>{description}</p>
+            <Imagem style={{ backgroundImage: `url(${prato.foto})` }} />
+            <h3>{prato.nome}</h3>
+            <p>{prato.descricao}</p>
             <button type="button">Adicionar ao Carrinho</button>
         </PratoCard>
     </>

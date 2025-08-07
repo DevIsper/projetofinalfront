@@ -1,60 +1,57 @@
-import React from 'react'
-import { List, Grid } from './styles'
+import React, { useEffect, useState } from 'react';
+import { List, Grid } from './styles';
 import RestauranteCard from "../RestauranteCard";
-
-const mockRestaurants = [
-    {
-        id: 1,
-        title: 'Hioki Sushi',
-        rating: 4.9,
-        description: 'Biscoito ou bolacha? A primeira vista podem parecer a mesma coisa, mas a forma de se apreciar o sabor de cada uma se diferencia...',
-        image: '/image1.png',
-        tags: ['Destaque da Semana', 'Japonesa']
-    },
-    {
-        id: 2,
-        title: 'La Dolce Vita Trattoria',
-        rating: 4.6,
-        description: 'A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e o melhor...',
-        image: '/image1.png',
-        tags: ['Italiana']
-    },
-    {
-        id: 3,
-        title: 'La Dolce Vita Trattoria',
-        rating: 4.6,
-        description: 'A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e o melhor...',
-        image: '/image2.png',
-        tags: ['Italiana']
-    },
-    {
-        id: 4,
-        title: 'Hioki Sushi',
-        rating: 4.9,
-        description: 'Biscoito ou bolacha? A primeira vista podem parecer a mesma coisa, mas a forma de se apreciar o sabor de cada uma se diferencia...',
-        image: '/image2.png',
-        tags: ['Italiana']
-    }
-]
+import type { Restaurante } from "../../types/types.ts";
+import { carregarRestaurantes } from "../../store/reducers/restauranteSlice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import type {RootState} from '../../store';
 
 const RestaurantsList = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setIsLoading(true);
+
+        fetch(`https://ebac-fake-api.vercel.app/api/efood/restaurantes`)
+            .then(res => res.json())
+            .then((data: Restaurante[]) => {
+                dispatch(carregarRestaurantes(data));
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error("Erro ao buscar dados do restaurante:", error);
+                setIsLoading(false);
+            });
+    }, [dispatch]);
+
+    const restaurantes = useSelector((state: RootState) => state.restaurantes.itens);
+
+    if (isLoading) {
+        return <p>Carregando...</p>;
+    }
+
+    if (!restaurantes || restaurantes.length === 0) {
+        return <p>Nenhum restaurante encontrado.</p>;
+    }
+
     return (
         <List>
             <Grid>
-                {mockRestaurants.map((restaurant) => (
+                {restaurantes.map((restaurante) => (
                     <RestauranteCard
-                        key={restaurant.id}
-                        id={restaurant.id}
-                        title={restaurant.title}
-                        rating={restaurant.rating}
-                        description={restaurant.description}
-                        image={restaurant.image}
-                        tags={restaurant.tags}
+                        key={restaurante.id}
+                        id={restaurante.id}
+                        title={restaurante.titulo}
+                        rating={restaurante.avaliacao}
+                        description={restaurante.descricao}
+                        image={restaurante.capa}
+                        tags={[restaurante.tipo]}
                     />
                 ))}
             </Grid>
         </List>
-    )
-}
+    );
+};
 
-export default RestaurantsList
+export default RestaurantsList;

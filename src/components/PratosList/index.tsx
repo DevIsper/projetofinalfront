@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PratosCard, type PratosCardProps } from "../PratosCard";
 import { Grid, List } from "./styles.ts";
 import Modal from "../Modal";
+import type {Prato} from "../../types/types.ts";
 
 const pratosItalianos = [
     {
@@ -81,22 +82,22 @@ const pratosJaponeses = [
     }
 ]
 
+
+
 export type Props = {
-    isJaponesa: boolean
+    pratos: Prato[]
 }
 
-export const PratosList: React.FC<Props> = ({ isJaponesa }) => {
-    const [selectedPrato, setSelectedPrato] = useState<PratosCardProps | null>(null);
+export const PratosList: React.FC<Props> = ({ pratos }) => {
+    const [selectedPrato, setSelectedPrato] = useState<Prato | null>(null);
 
-    const handleOpenModal = (prato: PratosCardProps) => {
+    const handleOpenModal = (prato: Prato) => {
         setSelectedPrato(prato);
     };
 
     const handleCloseModal = () => {
         setSelectedPrato(null);
     };
-
-    const pratos = isJaponesa ? pratosJaponeses : pratosItalianos;
 
     return (
         <>
@@ -106,13 +107,14 @@ export const PratosList: React.FC<Props> = ({ isJaponesa }) => {
                         {pratos.map((prato) => (
                             <PratosCard
                                 key={prato.id}
-                                {...prato} // Passando todas as props de uma vez
+                                prato={prato}
                                 onClick={() => handleOpenModal(prato)}
                             />
                         ))}
                     </Grid>
                 </List>
             </div>
+
             {selectedPrato && (
                 <Modal prato={selectedPrato} onClose={handleCloseModal} />
             )}
