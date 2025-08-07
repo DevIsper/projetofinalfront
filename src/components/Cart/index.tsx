@@ -14,9 +14,11 @@ import {
     TotalValue,
     ConfirmButton,
 } from './styles';
-import type {RootState} from '../../store';
+import type { RootState } from '../../store';
 import { removeFromCart } from '../../store/reducers/cartSlice';
-import Delivery from '../Delivery'; // 👈 Importa o novo componente
+import Delivery from '../Delivery';
+import Payment from '../Payment';
+import Confirmation from '../Confirmation'; // Importa o componente de confirmação
 
 type CartProps = {
     isOpen: boolean;
@@ -26,10 +28,28 @@ type CartProps = {
 const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state: RootState) => state.cart.items);
-    const [step, setStep] = useState<'cart' | 'delivery'>('cart'); // 👈 Novo estado para gerenciar a etapa
+
+    const [step, setStep] = useState<'cart' | 'delivery' | 'payment' | 'confirmation'>('cart');
+    const [deliveryInfo, setDeliveryInfo] = useState<any>(null);
+    const [orderId, setOrderId] = useState<string>('');
 
     const handleRemoveFromCart = (id: number) => {
         dispatch(removeFromCart(id));
+    };
+
+    const handleDeliveryContinue = (deliveryData: any) => {
+        setDeliveryInfo(deliveryData);
+        setStep('payment');
+    };
+
+    const handlePaymentSuccess = (id: string) => {
+        setOrderId(id);
+        setStep('confirmation');
+    };
+
+    const handleConfirmationClose = () => {
+        onClose();
+        setStep('cart');
     };
 
     const totalValue = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -60,7 +80,9 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                         <span>Valor total</span>
                         <span>R$ {totalValue.toFixed(2)}</span>
                     </TotalValue>
-                    <ConfirmButton onClick={() => setStep('delivery')}>Continuar com a entrega</ConfirmButton>
+                    <ConfirmButton onClick={() => setStep('delivery')}>
+                        Continuar com a entrega
+                    </ConfirmButton>
                 </>
             ) : (
                 <p>O carrinho está vazio.</p>
@@ -76,8 +98,33 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
             </SidebarHeader>
             <Delivery
                 onBackToCart={() => setStep('cart')}
-                onContinue={() => console.log('Próxima etapa: Pagamento')} // Você pode criar um novo estado para isso
+                onContinue={handleDeliveryContinue}
             />
+        </>
+    );
+
+    const renderPaymentForm = () => (
+        <>
+            <SidebarHeader>
+                <h3>Pagamento</h3>
+                <CloseButton onClick={onClose}>&times;</CloseButton>
+            </SidebarHeader>
+            <Payment
+                onBackToDelivery={() => setStep('delivery')}
+                onPaymentSuccess={handlePaymentSuccess}
+                deliveryInfo={deliveryInfo}
+            />
+        </>
+    );
+
+    const renderConfirmation = () => (
+        <>
+            <SidebarHeader>
+                <h3>Confirmação</h3>
+                <CloseButton onClick={handleConfirmationClose}>&times;</CloseButton>
+            </SidebarHeader>
+
+            <Confirmation orderId={orderId} onClose={handleConfirmationClose} />
         </>
     );
 
@@ -88,6 +135,8 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
             <Sidebar onClick={e => e.stopPropagation()}>
                 {step === 'cart' && renderCartItems()}
                 {step === 'delivery' && renderDeliveryForm()}
+                {step === 'payment' && renderPaymentForm()}
+                {step === 'confirmation' && renderConfirmation()}
             </Sidebar>
         </Overlay>
     );

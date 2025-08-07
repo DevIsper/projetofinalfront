@@ -10,7 +10,7 @@ import {
 
 type DeliveryProps = {
     onBackToCart: () => void;
-    onContinue: () => void;
+    onContinue: (deliveryData: any) => void; // A função agora recebe os dados
 };
 
 const Delivery: React.FC<DeliveryProps> = ({ onBackToCart, onContinue }) => {
@@ -23,9 +23,8 @@ const Delivery: React.FC<DeliveryProps> = ({ onBackToCart, onContinue }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Você pode adicionar a lógica para salvar os dados aqui
-        console.log('Dados da entrega:', { name, address, city, zip, number, complement });
-        onContinue(); // Chama a próxima etapa (pagamento)
+        const deliveryData = { name, address, city, zip, number, complement };
+        onContinue(deliveryData);
     };
 
     return (
