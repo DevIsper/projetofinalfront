@@ -1,4 +1,3 @@
-// src/store/restaurantes/restaurantesSlice.ts
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Restaurante } from '../../types/types';
 

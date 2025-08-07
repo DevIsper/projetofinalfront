@@ -1,8 +1,6 @@
-// src/components/Modal/index.tsx
-
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../store/reducers/cartSlice'; // Importe a ação
+import { addToCart } from '../../store/reducers/cartSlice';
 import { Overlay, ModalContent, CloseButton } from './styles';
 import type {Prato} from "../../types/types.ts";
 
@@ -24,7 +22,6 @@ const Modal: React.FC<Props> = ({ prato, onClose }) => {
             quantity: 1,
         };
         dispatch(addToCart(itemToAdd));
-        alert(`${prato.nome} adicionado ao carrinho!`);
         onClose();
     };
 
