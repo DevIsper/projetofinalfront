@@ -13,7 +13,7 @@ export const PratosCard: React.FC<PratosCardProps> = ({ prato, onClick }) => (
             <Imagem style={{ backgroundImage: `url(${prato.foto})` }} />
             <h3>{prato.nome}</h3>
             <p>{prato.descricao}</p>
-            <button type="button">Adicionar ao Carrinho</button>
+            <button type="button">Ver melhor</button>
         </PratoCard>
     </>
 );
